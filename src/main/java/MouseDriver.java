@@ -7,6 +7,7 @@
  * http://oss.software.ibm.com/developerworks/opensource/license-cpl.html
  */
 
+import java.io.IOException;
 import java.util.*;
 
 import javax.usb.*;
@@ -29,6 +30,7 @@ public class MouseDriver
 {
     public static void main(String argv[])
     {
+
         UsbHub virtualRootUsbHub = ShowTopology.getVirtualRootUsbHub();
         List usbInterfaces = FindUsbInterface.getUsbInterfacesWithInterfaceClass(virtualRootUsbHub, HID_CLASS);
 
@@ -69,7 +71,11 @@ public class MouseDriver
     {
         /* We have to claim the interface to communicate with this mouse. */
         try {
-            usbInterface.claim();
+            usbInterface.claim(new UsbInterfacePolicy() {
+                public boolean forceClaim(UsbInterface usbInterface) {
+                    return true;
+                }
+            });
         } catch ( UsbException uE ) {
             /* If we can't claim the interface, that means someone else is
              * using the interface (probably some other non-Java program).
@@ -187,7 +193,11 @@ public class MouseDriver
          * USB designers ;)
          */
         try {
-            usbInterface.claim();
+            usbInterface.claim(new UsbInterfacePolicy() {
+                public boolean forceClaim(UsbInterface usbInterface) {
+                    return true;
+                }
+            });
         } catch ( UsbException uE ) {
             /* If claiming the interface fails, we will still try to check the usage.
              * It may or may not work depending on how things are implemented lower down.

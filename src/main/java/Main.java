@@ -179,40 +179,40 @@ public class Main {
             e.printStackTrace();
         }
 
-//        try
-//        {
-//            byte[] data = new byte[8];
-//            int received = pipe.syncSubmit(data);
-//            System.out.println(received + " bytes received");
-//        } catch (UsbException e) {
-//            e.printStackTrace();
-//        } finally
-//        {
-//            try {
-//                pipe.close();
-//            } catch (UsbException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        try {
-//            iface.release();
-//        } catch (UsbException e) {
-//            e.printStackTrace();
-//        }
+        try
+        {
+            byte[] data = new byte[8];
+            int received = pipe.syncSubmit(data);
+            System.out.println(received + " bytes received");
+        } catch (UsbException e) {
+            e.printStackTrace();
+        } finally
+        {
+            try {
+                pipe.close();
+            } catch (UsbException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            iface.release();
+        } catch (UsbException e) {
+            e.printStackTrace();
+        }
 
-//        pipe.addUsbPipeListener(new UsbPipeListener() {
-//
-//            public void errorEventOccurred(UsbPipeErrorEvent event) {
-//
-//                UsbException error = event.getUsbException();
-//            }
-//
-//            public void dataEventOccurred(UsbPipeDataEvent event) {
-//
-//                byte[] data = event.getData();
-//                System.err.println(data);
-//            }
-//        });
+        pipe.addUsbPipeListener(new UsbPipeListener() {
+
+            public void errorEventOccurred(UsbPipeErrorEvent event) {
+
+                UsbException error = event.getUsbException();
+            }
+
+            public void dataEventOccurred(UsbPipeDataEvent event) {
+
+                byte[] data = event.getData();
+                System.err.println(data);
+            }
+        });
 
     }
 }
